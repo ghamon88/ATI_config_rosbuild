@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+	<Settings setcfgsel="0" setuserfilter="0" setpke="0" setbias0="0" setbias1="0" setbias2="0" setbias3="0" setbias4="0" setbias5="0"/>
+	<Thresholdings setmce="0" mce0="0" mce1="0" mce2="0" mce3="0" mce4="0" mce5="0" mce6="0" mce7="0" mce8="0" mce9="0" mce10="0" mce11="0" mce12="0" mce13="0" mce14="0" mce15="0" mcx0="0" mcx1="0" mcx2="0" mcx3="0" mcx4="0" mcx5="0" mcx6="0" mcx7="0" mcx8="0" mcx9="0" mcx10="0" mcx11="0" mcx12="0" mcx13="0" mcx14="0" mcx15="0" mcc0="1" mcc1="1" mcc2="1" mcc3="1" mcc4="1" mcc5="1" mcc6="1" mcc7="1" mcc8="1" mcc9="1" mcc10="1" mcc11="1" mcc12="1" mcc13="1" mcc14="1" mcc15="1" mcv0="0" mcv1="0" mcv2="0" mcv3="0" mcv4="0" mcv5="0" mcv6="0" mcv7="0" mcv8="0" mcv9="0" mcv10="0" mcv11="0" mcv12="0" mcv13="0" mcv14="0" mcv15="0" mco0="0" mco1="0" mco2="0" mco3="0" mco4="0" mco5="0" mco6="0" mco7="0" mco8="0" mco9="0" mco10="0" mco11="0" mco12="0" mco13="0" mco14="0" mco15="0"/>
+	<Configurations cfgid="0" cfgnam="ActConfig" cfgcalsel="0" cfgfu="2" cfgtu="3" cfgtdu="4" cfgtau="1" cfgtfx0="0" cfgtfx1="0" cfgtfx2="0" cfgtfx3="0" cfgtfx4="0" cfgtfx5="0" cfgusra="a" cfgusrb="b"/>
+	<Communications comnetdhcp="1" comnetip="192.168.1.100" comnetmsk="255.255.255.0" comnetgw="0.0.0.0" comeipe="0" comdnte="1" comrdte="1" comrdtrate="1000" comrdtbsiz="1" comrdtmsyn="0" comrdtmuid="0"/>
+	

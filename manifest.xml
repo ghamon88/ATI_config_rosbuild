@@ -1,0 +1,15 @@
+<package>
+  <description brief="ATI_config_rosbuild">
+
+     ATI_config_rosbuild
+
+  </description>
+  <author>kuka</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ATI_config_rosbuild</url>
+  <depend package="roscpp"/>
+
+</package>
+
+

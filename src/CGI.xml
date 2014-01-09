@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<?xml ?>
+<Config>
+	<Settings setcfgsel="0" setuserfilter="0" setpke="0" setbias0="0" setbias1="0" setbias2="0" setbias0="3" setbias0="4" setbias5="0">
+	</Settings>
+	<Thresholding setmce="0">
+	</Thresholding>
+	<Configurations cfgid="0" cfgnam="ActConfig" cfgcalsel="0" cfgfu="2" cfgtu="3">
+	</Configurations>
+	<Communications comnetdhcp="1">
+	</Communications>
+</Config>
