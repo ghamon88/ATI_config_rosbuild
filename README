@@ -1,0 +1,3 @@
+ATI_config_rosbuild ROS Component
+Parse a xml file to get configuration parameters values to calibrate the 6 Axis ATI F/T-Gamma sensor
+Configure the sensor using these values performing HTTP GET Requests
