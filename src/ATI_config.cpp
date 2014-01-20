@@ -41,52 +41,50 @@ int main(){
 	char ip[] = "192.168.1.1";
 	char* page;
 
-	// To modify values --> CGI.xml
-	// Settings
-        char* setcfgsel; // sets the active configuration
-	char* setuserfilter; // sets cutoff frequency of the low pass filter
-	char* setpke; //enable peak logging
+	/* To modify values --> CGI.xml */
+
+	/* Settings */
+        char* setcfgsel; 		// sets the active configuration
+	char* setuserfilter; 		// sets cutoff frequency of the low pass filter
+	char* setpke; 			//enable peak logging
 	char* setbias0; 
 	char* setbias1; 
 	char* setbias2;
 	char* setbias3;
 	char* setbias4;
-	char* setbias5; //offset values for strain gages
+	char* setbias5; 		//offset values for strain gages
 
-	// Thresholding
-        char* setmce; //enable threshold processing
+	/* Thresholding */
+        char* setmce; 			//enable threshold processing
 
-	// Configurations
-        char* cfgid; // config index
-	char* cfgnam;// config name
-	char* cfgcalsel; // calibration
-	char* cfgtu; // Torque units, 3=Nm
-	char* cfgfu; // force units, 2=Newton
-		// + other variables about tool transformation
+	/* Configurations */
+        char* cfgid; 			// config index
+	char* cfgnam;			// config name
+	char* cfgcalsel; 		// calibration
+	char* cfgtu; 			// Torque units, 3=Nm
+	char* cfgfu; 			// force units, 2=Newton
+					// + other variables about tool transformation
 
 
-	// Communications
-        char* comnetdhcp; // 0 use DHCP if available, 1 use software defined ip address
-	char* comnetip; // staic IP 
-	char* comnetmsk; //subnet mask ip
-	char* comnetgw; //gateway ip
-	char* comrdte; // enable RDT interface
-	char* comrdtrate; // RDT rate
-	char* comrdtbsiz; // RDT buffer size
+	/* Communications */
+        char* comnetdhcp; 		// 0 use DHCP if available, 1 use software defined ip address
+	char* comnetip; 		// staic IP 
+	char* comnetmsk; 		//subnet mask ip
+	char* comnetgw; 		//gateway ip
+	char* comrdte; 			// enable RDT interface
+	char* comrdtrate; 		// RDT rate
+	char* comrdtbsiz; 		// RDT buffer size
 
+
+	/* Load CGI.xml */
         char docName[]="CGI2.xml";
-	// Load CGI.xml
-
         TiXmlDocument doc(docName);
-	
 	std::cout << "LOAD " << docName << std::endl;
-
         if(!doc.LoadFile()) return 0;
-	
 	std::cout << "LOAD OK" << std::endl;
-
         TiXmlHandle docHandle(&doc );
-	// Settings
+
+	/* Settings */
         TiXmlElement* child = docHandle.FirstChild("Settings").ToElement();
 	if(!child) return 0;
 	setcfgsel = (char*)child->Attribute("setcfgsel");
@@ -100,20 +98,24 @@ int main(){
         setbias4 = (char*)child->Attribute("setbias4");
         setbias5 = (char*)child->Attribute("setbias5");
 	std::cout << setpke << std::endl;
-	// Thresholding
+
+	/* Thresholding */
         child = docHandle.FirstChild("Thresholdings").ToElement();
+	if(!child) return 0;
         setmce =(char*)child->Attribute( "setmce");
 	
-	// Configurations
+	/* Configurations */
         child = docHandle.FirstChild("Configurations").ToElement();
+	if(!child) return 0;
         cfgid = (char*)child->Attribute( "cfgid");
 	cfgnam = (char*)child->Attribute( "cfgnam");
 	cfgcalsel = (char*)child->Attribute( "cfgcalsel");
 	cfgtu = (char*)child->Attribute( "cfgtu");
 	cfgfu = (char*)child->Attribute( "cfgfu");
 
-	// Communications
+	/* Communications */
         child = docHandle.FirstChild("Communications").ToElement();
+	if(!child) return 0;
         comnetdhcp = (char*)child->Attribute( "comnetdhcp");
         comnetip = (char*)child->Attribute( "comnetip");
         comnetmsk = (char*)child->Attribute( "comnetmsk");
@@ -122,8 +124,9 @@ int main(){
         comrdtrate = (char*)child->Attribute( "comrdtrate");
         comrdtbsiz = (char*)child->Attribute( "comrdtbsiz");
 
-	std::cout << "START SERVER" << std::endl;
 
+	/* Connect to server */
+	std::cout << "START SERVER" << std::endl;
 	serverAddr.sin_family = AF_INET;
     	serverAddr.sin_port = htons(80);
     	serverAddr.sin_addr.s_addr = inet_addr(ip);
@@ -134,6 +137,7 @@ int main(){
     	if (connect(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
         	std::cout << "error connect" << std::endl;
 
+	/* HTTP request */
 	page=(char*)malloc((1+23+strlen(setcfgsel)+15+strlen(setuserfilter)+8+strlen(setpke)+6*10+strlen(setbias0)+strlen(setbias1)+strlen(setbias2)+strlen(setbias3)+strlen(setbias4)+strlen(setbias5))*sizeof(char));
 	sprintf(page,"/setting.cgi?setcfgsel=%s&setuserfilter=%s&setpke=%s&setbias0=%s&setbias1=%s&setbias2=%s&setbias3=%s&setbias4=%s&setbias5=%s",setcfgsel,setuserfilter,setpke,setbias0,setbias1,setbias2,setbias3,setbias4,setbias5);
 	sendRequest(page,serverSocket);	
