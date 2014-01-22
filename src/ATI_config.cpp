@@ -24,7 +24,7 @@ void sendRequest(char* page, int serverSocket)
 	char* request;
 	size_t bWritten, bTotal;
 	request=(char*)malloc((16+22+strlen(page))*sizeof(char));
-	sprintf(request, "GET %s HTTP/1.1\r\nHOST:192.168.1.1\r\n\r\n",page);
+	sprintf(request, "GET %s HTTP/1.0\r\nHOST:192.168.1.1\r\n\r\n",page);
 	std::cout << "request " << request << std::endl;
     	for (bTotal = 0; bTotal < strlen(request); bTotal += bWritten)
     	{
@@ -169,7 +169,7 @@ int main(){
 	char* comrdtmuid;
 
 	/* Load CGI.xml */
-        char docName[]="CGI2.xml";
+        char docName[]="/home/kuka/src/groovy_workspace/ATI_config_rosbuild/src/CGI.xml";
         TiXmlDocument doc(docName);
 	std::cout << "LOAD " << docName << std::endl;
         if(!doc.LoadFile()) return 0;
@@ -326,14 +326,41 @@ int main(){
 	page=(char*)malloc((1+23+strlen(setcfgsel)+15+strlen(setuserfilter)+8+strlen(setpke)+6*10+strlen(setbias0)+strlen(setbias1)+strlen(setbias2)+strlen(setbias3)+strlen(setbias4)+strlen(setbias5))*sizeof(char));
 	sprintf(page,"/setting.cgi?setcfgsel=%s&setuserfilter=%s&setpke=%s&setbias0=%s&setbias1=%s&setbias2=%s&setbias3=%s&setbias4=%s&setbias5=%s",setcfgsel,setuserfilter,setpke,setbias0,setbias1,setbias2,setbias3,setbias4,setbias5);
 	sendRequest(page,serverSocket);	
+	
+	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if (serverSocket < 0)
+        	std::cout << "error socket" << std::endl;
+	if (connect(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
+		std::cout << "error connect" << std::endl;
 
-	page=(char*)malloc((1+19+strlen(setmce)+6*10*5+7*6*5+2*strlen(mce0)*16*5)*sizeof(char));
-	sprintf(page,"/moncon.cgi?setmce=%s&mce0=%s&mce1=%s&mce2=%s&mce3=%s&mce4=%s&mce5=%s&mce6=%s&mce7=%s&mce8=%s&mce9=%s&mce10=%s&mce11=%s&mce12=%s&mce13=%s&mce14=%s&mce15=%s&mcx0=%s&mcx1=%s&mcx2=%s&mcx3=%s&mcx4=%s&mcx5=%s&mcx6=%s&mcx7=%s&mcx8=%s&mcx9=%s&mcx10=%s&mcx11=%s&mcx12=%s&mcx13=%s&mcx14=%s&mcx15=%s&mcc0=%s&mcc1=%s&mcc2=%s&mcc3=%s&mcc4=%s&mcc5=%s&mcc6=%s&mcc7=%s&mcc8=%s&mcc9=%s&mcc10=%s&mcc11=%s&mcc12=%s&mcc13=%s&mcc14=%s&mcc15=%s&mcv0=%s&mcv1=%s&mcv2=%s&mcv3=%s&mcv4=%s&mcv5=%s&mcv6=%s&mcv7=%s&mcv8=%s&mcv9=%s&mcv10=%s&mcv11=%s&mcv12=%s&mcv13=%s&mcv14=%s&mcv15=%s&mco0=%s&mco1=%s&mco2=%s&mco3=%s&mco4=%s&mco5=%s&mco6=%s&mco7=%s&mco8=%s&mco9=%s&mco10=%s&mco11=%s&mco12=%s&mco13=%s&mco14=%s&mco15=%s",setmce,mce0,mce1,mce2,mce3,mce4,mce5,mce6,mce7,mce8,mce9,mce10,mce11,mce12,mce13,mce14,mce15,mcx0,mcx1,mcx2,mcx3,mcx4,mcx5,mcx6,mcx7,mcx8,mcx9,mcx10,mcx11,mcx12,mcx13,mcx14,mcx15,mcc0,mcc1,mcc2,mcc3,mcc4,mcc5,mcc6,mcc7,mcc8,mcc9,mcc10,mcc11,mcc12,mcc13,mcc14,mcc15,mcv0,mcv1,mcv2,mcv3,mcv4,mcv5,mcv6,mcv7,mcv8,mcv9,mcv10,mcv11,mcv12,mcv13,mcv14,mcv15,mco0,mco1,mco2,mco3,mco4,mco5,mco6,mco7,mco8,mco9,mco10,mco11,mco12,mco13,mco14,mco15);
+	page=(char*)malloc((1+19+strlen(setmce)+6*10*3+7*6*3+2*strlen(mce0)*16*3)*sizeof(char));
+	sprintf(page,"/moncon.cgi?setmce=%s&mce0=%s&mce1=%s&mce2=%s&mce3=%s&mce4=%s&mce5=%s&mce6=%s&mce7=%s&mce8=%s&mce9=%s&mce10=%s&mce11=%s&mce12=%s&mce13=%s&mce14=%s&mce15=%s&mcx0=%s&mcx1=%s&mcx2=%s&mcx3=%s&mcx4=%s&mcx5=%s&mcx6=%s&mcx7=%s&mcx8=%s&mcx9=%s&mcx10=%s&mcx11=%s&mcx12=%s&mcx13=%s&mcx14=%s&mcx15=%s&mcc0=%s&mcc1=%s&mcc2=%s&mcc3=%s&mcc4=%s&mcc5=%s&mcc6=%s&mcc7=%s&mcc8=%s&mcc9=%s&mcc10=%s&mcc11=%s&mcc12=%s&mcc13=%s&mcc14=%s&mcc15=%s",setmce,mce0,mce1,mce2,mce3,mce4,mce5,mce6,mce7,mce8,mce9,mce10,mce11,mce12,mce13,mce14,mce15,mcx0,mcx1,mcx2,mcx3,mcx4,mcx5,mcx6,mcx7,mcx8,mcx9,mcx10,mcx11,mcx12,mcx13,mcx14,mcx15,mcc0,mcc1,mcc2,mcc3,mcc4,mcc5,mcc6,mcc7,mcc8,mcc9,mcc10,mcc11,mcc12,mcc13,mcc14,mcc15);
 	sendRequest(page,serverSocket);
+	
+	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if (serverSocket < 0)
+        	std::cout << "error socket" << std::endl;
+	if (connect(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
+		std::cout << "error connect" << std::endl;
+
+	page=(char*)malloc((1+19+6*10*2+7*6*2+2*strlen(mcv0)*16*2+200)*sizeof(char));
+	sprintf(page,"/moncon.cgi?mcv0=%s&mcv1=%s&mcv2=%s&mcv3=%s&mcv4=%s&mcv5=%s&mcv6=%s&mcv7=%s&mcv8=%s&mcv9=%s&mcv10=%s&mcv11=%s&mcv12=%s&mcv13=%s&mcv14=%s&mcv15=%s&mco0=%s&mco1=%s&mco2=%s&mco3=%s&mco4=%s&mco5=%s&mco6=%s&mco7=%s&mco8=%s&mco9=%s&mco10=%s&mco11=%s&mco12=%s&mco13=%s&mco14=%s&mco15=%s",mcv0,mcv1,mcv2,mcv3,mcv4,mcv5,mcv6,mcv7,mcv8,mcv9,mcv10,mcv11,mcv12,mcv13,mcv14,mcv15,mco0,mco1,mco2,mco3,mco4,mco5,mco6,mco7,mco8,mco9,mco10,mco11,mco12,mco13,mco14,mco15);
+	sendRequest(page,serverSocket);
+	
+	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if (serverSocket < 0)
+        	std::cout << "error socket" << std::endl;
+	if (connect(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
+		std::cout << "error connect" << std::endl;
 
 	page=(char*)malloc((1+18+strlen(cfgid)+8+strlen(cfgnam)+11+strlen(cfgcalsel)+7+strlen(cfgtu)+7+strlen(cfgfu)+9*6+strlen(cfgtfx0)+strlen(cfgtfx1)+strlen(cfgtfx2)+strlen(cfgtfx3)+strlen(cfgtfx4)+strlen(cfgtfx5)+8+strlen(cfgtdu)+8+strlen(cfgtau)+9+strlen(cfgusra)+9+strlen(cfgusrb))*sizeof(char));
 	sprintf(page,"/config.cgi?cfgid=%s&cfgnam=%s&cfgcalsel=%s&cfgtu=%s&cfgfu=%s&cfgtdu=%s&cfgtau=%s&cfgtfx0=%s&cfgtfx1=%s&cfgtfx2=%s&cfgtfx3=%s&cfgtfx4=%s&cfgtfx5=%s&cfgusra=%s&cfgusrb=%s",cfgid,cfgnam,cfgcalsel,cfgtu,cfgfu,cfgtdu,cfgtau,cfgtfx0,cfgtfx1,cfgtfx2,cfgtfx3,cfgtfx4,cfgtfx5,cfgusra,cfgusrb);
 	sendRequest(page,serverSocket);
+	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if (serverSocket < 0)
+        	std::cout << "error socket" << std::endl;
+	if (connect(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
+		std::cout << "error connect" << std::endl;
 
 	page=(char*)malloc((1+21+strlen(comnetdhcp)+10+strlen(comnetip)+11+strlen(comnetmsk)+10+strlen(comnetgw)+9+strlen(comrdte)+12+strlen(comrdtrate)+12+strlen(comrdtbsiz)+9+strlen(comeipe)+9+strlen(comdnte)+12+strlen(comrdtmsyn)+12+strlen(comrdtmuid))*sizeof(char));
 	sprintf(page,"/comm.cgi?comnetdhcp=%s&comnetip=%s&comnetmsk=%s&comnetgw=%s&comrdte=%s&comrdtrate=%s&comrdtbsiz=%s&comeipe=%s&comdnte=%s&comrdtmsyn=%s&comrdtmuid=%s",comnetdhcp,comnetip,comnetmsk,comnetgw,comrdte,comrdtrate,comrdtbsiz,comeipe,comdnte,comrdtmsyn,comrdtmuid);
