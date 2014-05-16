@@ -24,7 +24,7 @@ void sendRequest(char* page, int serverSocket)
 	char* request;
 	size_t bWritten, bTotal;
 	request=(char*)malloc((16+22+strlen(page))*sizeof(char));
-	sprintf(request, "GET %s HTTP/1.0\r\nHOST:192.168.1.1\r\n\r\n",page);
+	sprintf(request, "GET %s HTTP/1.0\r\nHOST:192.168.100.103\r\n\r\n",page);
 	std::cout << "request " << request << std::endl;
     	for (bTotal = 0; bTotal < strlen(request); bTotal += bWritten)
     	{
@@ -38,7 +38,7 @@ void sendRequest(char* page, int serverSocket)
 int main(){
 	int serverSocket;
 	struct sockaddr_in serverAddr;
-	char ip[] = "192.168.1.1";
+	char ip[] = "192.168.100.103";
 	char* page;
 
 	/* To modify values --> CGI.xml */
